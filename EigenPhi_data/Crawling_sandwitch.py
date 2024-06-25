@@ -22,15 +22,15 @@ def FetchEigenPhi(day):
     try:
         ######################################## Choose date
         pick_date_button = driver.find_element(By.XPATH, "//input[@placeholder='Pick date']")
-        # print("Found date picker button")
+        print("Found date picker button")
         pick_date_button.click()
 
         wait = WebDriverWait(driver, 30)
         date_picker_dropdown = wait.until(EC.visibility_of_element_located((By.CLASS_NAME, 'mantine-DatePicker-dropdown')))
-        # print("Date picker dropdown visible")
+        print("Date picker dropdown visible")
 
         date_button = date_picker_dropdown.find_element(By.XPATH, f"//button[@class='mantine-4t7fl6 mantine-DatePicker-day' and text()='{day}']")
-        print(f"Found date button for date {day}")
+        print("Found date button")
         date_button.click()
 
         time.sleep(15)
@@ -45,14 +45,14 @@ def FetchEigenPhi(day):
         while True:
             print(f"Extracting data of date {day} from page {i + 1}")
             section = driver.find_element(By.CLASS_NAME, 'mantine-vnv9e5')
-            # print("Found section")
+            print("Found section")
 
             table = section.find_element(By.CLASS_NAME, 'mantine-Table-root')
-            # print("Found table")
+            print("Found table")
 
             if headers is None:
                 headers = [header.text for header in table.find_elements(By.TAG_NAME, 'th')]
-                # print("Headers:", headers)
+                print("Headers:", headers)
                 headers.insert(2, 'Transaction Hash URL')
 
             rows = table.find_elements(By.TAG_NAME, 'tr')
@@ -67,7 +67,7 @@ def FetchEigenPhi(day):
                     else:
                         row_data.append(col.text)
                 all_data.append(row_data)
-            # print("Page data extracted")
+            print("Page data extracted")
             i += 1
 
             try:
@@ -75,7 +75,7 @@ def FetchEigenPhi(day):
                 driver.execute_script("arguments[0].scrollIntoView(true);", next_button)
                 time.sleep(1)  # Wait for scrolling to complete
                 driver.execute_script("arguments[0].click();", next_button)
-                time.sleep(10)  # Wait for the page to load
+                time.sleep(5)  # Wait for the page to load
             except Exception as e:
                 print(f"No more pages or an error occurred: {e}")
                 break
@@ -113,5 +113,3 @@ for day in days:
 # Wait for all threads to complete
 for thread in threads:
     thread.join()
-
-
