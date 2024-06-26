@@ -102,7 +102,7 @@ def FetchEigenPhi(day):
 # if __name__ == '__main__':
 #     FetchEigenPhi(24)
 
-days = [20, 21, 22, 23]
+days = [17, 18, 19, 20, 21, 22, 23, 24, 25]
 
 
 # Function to run in each thread
