@@ -40,10 +40,10 @@ def FetchEigenPhi(day):
         all_data = []
         headers = None
 
-        i = 0
+        i = 'start'
 
         while True:
-            print(f"Extracting data of date {day} from page {i + 1}")
+            print(f"Extracting data of date {day} from time {i}")
             section = driver.find_element(By.CLASS_NAME, 'mantine-vnv9e5')
             # print("Found section")
 
@@ -68,7 +68,13 @@ def FetchEigenPhi(day):
                         row_data.append(col.text)
                 all_data.append(row_data)
             # print("Page data extracted")
-            i += 1
+
+            if i != 'start':
+                if all_data[-13][0] == all_data[-2][0]:
+                    print('get to the last page')
+                    break
+
+            i = all_data[-11][0]
 
             try:
                 next_button = driver.find_element(By.XPATH, "/html/body/div[1]/div/div/main/div[1]/div/div[4]/section/table/tfoot/tr/td/div/div/div/div[3]/button[2]")
@@ -85,6 +91,8 @@ def FetchEigenPhi(day):
         print("Table data saved to table_data.csv")
 
     except Exception as e:
+        df = pd.DataFrame(all_data, columns=headers)
+        df.to_csv('BSC_Sandwich_data_' + str(day) + '.csv', index=False)
         print(f"An error occurred: {e}")
 
     finally:

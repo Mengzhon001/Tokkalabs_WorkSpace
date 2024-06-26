@@ -25,10 +25,14 @@ def FetchEigenPhi():
     while True:
         # if i==2:
         #     break
-
-        time_start=time.time()
-        section = driver.find_element(By.CLASS_NAME, 'mantine-vnv9e5')
-        print("Found section")
+        try:
+            time_start=time.time()
+            section = driver.find_element(By.CLASS_NAME, 'mantine-vnv9e5')
+            print("Found section")
+        except:
+            print('find problem in getting section wait jump into the next round')
+            time.sleep(3)
+            continue
 
         table = section.find_element(By.CLASS_NAME, 'mantine-Table-root')
         print("Found table")
