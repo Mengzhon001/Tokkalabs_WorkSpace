@@ -14,7 +14,8 @@ def FetchEigenPhi(day):
     options.add_argument('--headless')
     driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
 
-    url = 'https://eigenphi.io/mev/bsc/sandwich'
+    # url = 'https://eigenphi.io/mev/bsc/sandwich'
+    url = 'https://eigenphi.io/mev/ethereum/sandwich'
     driver.get(url)
 
     time.sleep(15)
@@ -87,12 +88,14 @@ def FetchEigenPhi(day):
                 break
 
         df = pd.DataFrame(all_data, columns=headers)
-        df.to_csv('BSC_Sandwich_data_'+str(day)+'.csv', index=False)
+        # df.to_csv('BSC_Sandwich_data_'+str(day)+'.csv', index=False)
+        df.to_csv('ETH_Sandwich_data_' + str(day) + '.csv', index=False)
         print("Table data saved to table_data.csv")
 
     except Exception as e:
         df = pd.DataFrame(all_data, columns=headers)
-        df.to_csv('BSC_Sandwich_data_' + str(day) + '.csv', index=False)
+        # df.to_csv('BSC_Sandwich_data_' + str(day) + '.csv', index=False)
+        df.to_csv('ETH_Sandwich_data_' + str(day) + '.csv', index=False)
         print(f"An error occurred: {e}")
 
     finally:
